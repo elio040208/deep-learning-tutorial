@@ -17,6 +17,13 @@ from dl_tutorial.builders import (
 from dl_tutorial.utils.seed import set_seed
 from dl_tutorial.engine.train import Trainer
 
+# Ensure registries are populated by importing side-effect modules
+from dl_tutorial import models as _models  # noqa: F401
+from dl_tutorial.data import datasets as _datasets  # noqa: F401
+from dl_tutorial.data import transforms as _transforms  # noqa: F401
+from dl_tutorial import optim as _optim  # noqa: F401
+from dl_tutorial import losses as _losses  # noqa: F401
+
 
 def main() -> None:
     parser = build_argparser()
