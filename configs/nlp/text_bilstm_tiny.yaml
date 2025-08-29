@@ -1,0 +1,52 @@
+seed: 42
+work_dir: runs/text_bilstm_tiny
+mixed_precision: false
+epochs: 1
+log_interval: 20
+
+model:
+  name: classification_model
+  backbone:
+    name: text_bilstm
+    vocab_size: 5000
+    embedding_dim: 128
+    hidden_size: 128
+    num_layers: 1
+    bidirectional: true
+    feature_dim: 128
+  head:
+    name: linear_classifier
+    in_features: 128
+    num_classes: 4
+
+loss:
+  name: cross_entropy
+
+optimizer:
+  name: Adam
+  lr: 0.001
+
+scheduler: null
+
+data:
+  train:
+    name: CSVTextClassification
+    root: data/textcls
+    split: train
+    max_len: 128
+  val:
+    name: CSVTextClassification
+    root: data/textcls
+    split: val
+    max_len: 128
+  train_loader:
+    batch_size: 64
+    shuffle: true
+    num_workers: 2
+    pin_memory: true
+  val_loader:
+    batch_size: 128
+    shuffle: false
+    num_workers: 2
+    pin_memory: true
+
