@@ -1,0 +1,56 @@
+seed: 42
+work_dir: runs/smallcnn_mnist
+mixed_precision: false
+epochs: 2
+
+model:
+  name: classification_model
+  backbone:
+    name: small_cnn
+    in_channels: 1
+    feature_dim: 128
+  head:
+    name: linear_classifier
+    in_features: 128
+    num_classes: 10
+
+loss:
+  name: cross_entropy
+
+optimizer:
+  name: Adam
+  lr: 0.001
+
+scheduler: null
+
+data:
+  train:
+    name: MNIST
+    root: data
+    train: true
+    download: true
+    transforms:
+      - name: ToTensor
+      - name: Normalize
+        mean: [0.1307]
+        std: [0.3081]
+  val:
+    name: MNIST
+    root: data
+    train: false
+    download: true
+    transforms:
+      - name: ToTensor
+      - name: Normalize
+        mean: [0.1307]
+        std: [0.3081]
+  train_loader:
+    batch_size: 128
+    shuffle: true
+    num_workers: 4
+    pin_memory: true
+  val_loader:
+    batch_size: 256
+    shuffle: false
+    num_workers: 4
+    pin_memory: true
